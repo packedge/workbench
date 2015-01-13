@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Packedge\Workbench\Generators\ComposerGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
+use Packedge\Workbench\Generators\ReadmeGenerator;
 use Packedge\Workbench\Package;
 use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
@@ -53,13 +54,24 @@ class NewCommand extends Command
         $generator = new PackageGenerator();
 
         $composer = new ComposerGenerator;
+        $description = trim($this->argument('description'));
         $composer->setData([
             'name' => $parser->toPackageName(),
-            'description' => trim($this->argument('description')),
+            'description' => $description,
             'psr4' => $parser->toPsr4(), // allow overriding this.
+            'author' => $this->option('name'), // this will be a default setting and overridden by this flag.
+            'email' => $this->option('email'), // this will be a default setting and overridden by this flag.
         ]);
-
         $generator->addGenerator($composer);
+
+        $readme = new ReadmeGenerator;
+        $readme->setData([
+            'name' => $parser->toHuman(),
+            'description' => $description,
+            'package' => $parser->toPackageName()
+        ]);
+        $generator->addGenerator($readme);
+
         $generator->create($this->package);
     }
 
@@ -83,7 +95,8 @@ class NewCommand extends Command
     protected function getOptions()
     {
         return array(
-//            array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the configuration files.', null),
+            array('name', null, InputOption::VALUE_REQUIRED, 'The package creators name.', null),
+            array('email', null, InputOption::VALUE_REQUIRED, 'The package creators email.', null),
 //            array('force', null, InputOption::VALUE_NONE, 'Force the operation to run when the file already exists.'),
         );
     }

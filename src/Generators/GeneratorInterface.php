@@ -6,6 +6,7 @@ interface GeneratorInterface
     /**
      * Creates the required files for the generator.
      *
+     * @param $packagePath
      * @return void
      */
     public function create($packagePath);

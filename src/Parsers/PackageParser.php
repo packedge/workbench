@@ -40,4 +40,10 @@ class PackageParser implements ParserInterface
     {
         $this->packageName = trim(strtolower($packageName));
     }
+
+    public function toHuman()
+    {
+        $name = explode('/', $this->packageName)[1];
+        return ucwords(str_replace('-', ' ', $name));
+    }
 }

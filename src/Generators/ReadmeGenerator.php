@@ -3,8 +3,9 @@
 use Illuminate\Filesystem\Filesystem;
 use Mustache_Engine;
 
-class ComposerGenerator implements GeneratorInterface
+class ReadmeGenerator implements GeneratorInterface
 {
+
     /**
      * @var string
      */
@@ -32,8 +33,8 @@ class ComposerGenerator implements GeneratorInterface
      */
     public function __construct(Filesystem $filesystem = null, Mustache_Engine $mustache = null)
     {
-        $this->templatePath = __DIR__ . '/../../templates/composer.txt';
-        $this->outputPath = 'composer.json';
+        $this->templatePath = __DIR__ . '/../../templates/readme.txt';
+        $this->outputPath = 'README.md';
         $this->filesystem = $filesystem ?: new Filesystem;
         $this->mustache = $mustache ?: new Mustache_Engine;
     }
