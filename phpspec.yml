@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Packedge\Workbench
+        psr4_prefix: Packedge\Workbench

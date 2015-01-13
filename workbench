@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Stolen from https://github.com/laravel/homestead/blob/master/homestead
+function workbench_path()
+{
+    if (isset($_SERVER['HOME']))
+    {
+        return $_SERVER['HOME'].'/.workbench';
+    }
+    else
+    {
+        return $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'].DIRECTORY_SEPARATOR.'.workbench';
+    }
+}
+
+//$app = new \Illuminate\Console\Application('Packedge Workbench', '0.1.0');
+//
+//$app->add(new \Packedge\Workbench\Console\Package\NewCommand);
+
+$app = new \Packedge\Workbench\Console\Application('Packedge Workbench', '0.1.0');
+
+$app->resolve('\Packedge\Workbench\Console\Package\NewCommand');
+
+$app->run();
