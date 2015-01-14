@@ -22,6 +22,10 @@ class NewCommand extends Command
      * @var string
      */
     protected $description = 'Create a new package';
+    /**
+     * @var Parser
+     */
+    protected $parser;
 
     public function __construct()
     {
@@ -35,15 +39,15 @@ class NewCommand extends Command
      */
     public function fire()
     {
-        $parser = new PackageParser($this->argument('package'));
+        $this->parser = new PackageParser($this->argument('package'));
         $generator = new PackageGenerator();
 
         // Composer
-        $composer = $this->prepareComposer($parser);
+        $composer = $this->prepareComposer();
         $generator->addGenerator($composer);
 
         // Readme
-        $readme = $this->prepareReadme($parser);
+        $readme = $this->prepareReadme();
         $generator->addGenerator($readme);
 
         // Create the Package
@@ -77,16 +81,15 @@ class NewCommand extends Command
     }
 
     /**
-     * @param $parser
      * @return ComposerGenerator
      */
-    protected function prepareComposer($parser)
+    protected function prepareComposer()
     {
         $composer = new ComposerGenerator;
         $composer->setData([
-            'name' => $parser->toPackageName(),
+            'name' => $this->parser->toPackageName(),
             'description' => trim($this->argument('description')),
-            'psr4' => $parser->toPsr4(), // allow overriding this.
+            'psr4' => $this->parser->toPsr4(), // allow overriding this.
             'author' => $this->option('name'), // this will be a default setting and overridden by this flag.
             'email' => $this->option('email'), // this will be a default setting and overridden by this flag.
         ]);
@@ -94,16 +97,15 @@ class NewCommand extends Command
     }
 
     /**
-     * @param $parser
      * @return ReadmeGenerator
      */
-    protected function prepareReadme($parser)
+    protected function prepareReadme()
     {
         $readme = new ReadmeGenerator;
         $readme->setData([
-            'name' => $parser->toHuman(),
+            'name' => $this->parser->toHuman(),
             'description' => trim($this->argument('description')),
-            'package' => $parser->toPackageName()
+            'package' => $this->parser->toPackageName()
         ]);
         return $readme;
     }
