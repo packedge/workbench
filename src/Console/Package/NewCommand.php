@@ -1,11 +1,9 @@
 <?php namespace Packedge\Workbench\Console\Package;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 use Packedge\Workbench\Generators\ComposerGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
 use Packedge\Workbench\Generators\ReadmeGenerator;
-use Packedge\Workbench\Package;
 use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,20 +22,10 @@ class NewCommand extends Command
      * @var string
      */
     protected $description = 'Create a new package';
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var Package
-     */
-    private $package;
 
-    public function __construct(Filesystem $filesystem, Package $package)
+    public function __construct()
     {
         parent::__construct();
-        $this->filesystem = $filesystem;
-        $this->package = $package;
     }
 
     /**
@@ -48,8 +36,6 @@ class NewCommand extends Command
     public function fire()
     {
         $parser = new PackageParser($this->argument('package'));
-        $this->package->setPackageName($parser->toPackageName());
-
         $generator = new PackageGenerator();
 
         // Composer
