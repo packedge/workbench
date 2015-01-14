@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Packedge\Workbench\Generators\ComposerGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
 use Packedge\Workbench\Generators\ReadmeGenerator;
+use Packedge\Workbench\Package;
 use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,10 +27,15 @@ class NewCommand extends Command
      * @var Parser
      */
     protected $parser;
+    /**
+     * @var Package
+     */
+    private $package;
 
-    public function __construct()
+    public function __construct(Package $package)
     {
         parent::__construct();
+        $this->package = $package;
     }
 
     /**
@@ -39,6 +45,7 @@ class NewCommand extends Command
      */
     public function fire()
     {
+        $this->package->setPackageName($this->argument('package'));
         $this->parser = new PackageParser($this->argument('package'));
         $generator = new PackageGenerator();
 
