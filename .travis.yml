@@ -11,8 +11,6 @@ before_script:
 
 script: vendor/bin/phpspec run
 
-before_install:
-  sudo pip install codecov
-  
-after_success:
-  codecov
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
