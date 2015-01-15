@@ -12,7 +12,7 @@ class ComposerGenerator extends BaseGenerator implements GeneratorInterface
     public function __construct(Filesystem $filesystem = null, Mustache_Engine $mustache = null)
     {
         parent::__construct($filesystem, $mustache);
-        $this->templatePath = __DIR__ . '/../../templates/composer.txt';
+        $this->templatePath = 'composer.txt';
         $this->outputPath = 'composer.json';
     }
 }

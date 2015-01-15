@@ -1,6 +1,6 @@
 <?php namespace Packedge\Workbench\Console\Package;
 
-use Illuminate\Console\Command;
+use Packedge\Workbench\Console\BaseCommand;
 use Packedge\Workbench\Generators\ComposerGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
 use Packedge\Workbench\Generators\ReadmeGenerator;
@@ -9,7 +9,7 @@ use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class NewCommand extends Command
+class NewCommand extends BaseCommand
 {
     /**
      * The console command name.
@@ -27,6 +27,12 @@ class NewCommand extends Command
      * @var Parser
      */
     protected $parser;
+
+    /**
+     * @var string
+     */
+    protected $packageDescription;
+    protected $packageName;
     /**
      * @var Package
      */
@@ -45,8 +51,11 @@ class NewCommand extends Command
      */
     public function fire()
     {
-        $this->package->setPackageName($this->argument('package'));
-        $this->parser = new PackageParser($this->argument('package'));
+        $this->packageName = $this->askForArgument('package', 'What is your package name?');
+        $this->packageDescription = $this->askForArgument('description', 'What is your package description?');
+
+        $this->package->setPackageName($this->packageName);
+        $this->parser = new PackageParser($this->packageName);
         $generator = new PackageGenerator();
 
         // Composer
@@ -69,8 +78,8 @@ class NewCommand extends Command
     protected function getArguments()
     {
         return array(
-            array('package', InputArgument::REQUIRED, 'The name of the package to create (e.g. vendor/package-name).'),
-            array('description', InputArgument::REQUIRED, 'The description of the package.'),
+            array('package', InputArgument::OPTIONAL, 'The name of the package to create (e.g. vendor/package-name).'),
+            array('description', InputArgument::OPTIONAL, 'The description of the package.'),
         );
     }
     /**
@@ -95,7 +104,7 @@ class NewCommand extends Command
         $composer = new ComposerGenerator;
         $composer->setData([
             'name' => $this->parser->toPackageName(),
-            'description' => trim($this->argument('description')),
+            'description' => $this->packageDescription,
             'psr4' => $this->parser->toPsr4(), // allow overriding this.
             'author' => $this->option('name'), // this will be a default setting and overridden by this flag.
             'email' => $this->option('email'), // this will be a default setting and overridden by this flag.
@@ -111,7 +120,7 @@ class NewCommand extends Command
         $readme = new ReadmeGenerator;
         $readme->setData([
             'name' => $this->parser->toHuman(),
-            'description' => trim($this->argument('description')),
+            'description' => $this->packageDescription,
             'package' => $this->parser->toPackageName()
         ]);
         return $readme;
