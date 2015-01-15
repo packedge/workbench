@@ -49,11 +49,16 @@ class BaseGenerator
      */
     public function create($packagePath)
     {
-        $template = $this->filesystem->get($this->templatePath);
+        $template = $this->filesystem->get($this->getTemplatePath());
 
         $output = $this->mustache->render($template, $this->data);
 
         $this->filesystem->put($packagePath . '/' . $this->outputPath, $output);
+    }
+
+    protected function getTemplatePath()
+    {
+        return realpath(__DIR__ . '/../../templates/') . '/' . $this->templatePath;
     }
 
     /**

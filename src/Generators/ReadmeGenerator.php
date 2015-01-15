@@ -8,7 +8,7 @@ class ReadmeGenerator extends BaseGenerator implements GeneratorInterface
     public function __construct(Filesystem $filesystem = null, Mustache_Engine $mustache = null)
     {
         parent::__construct($filesystem, $mustache);
-        $this->templatePath = __DIR__ . '/../../templates/readme.txt';
+        $this->templatePath = 'readme.txt';
         $this->outputPath = 'README.md';
     }
 }
