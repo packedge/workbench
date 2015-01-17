@@ -11,4 +11,10 @@ class PackageGeneratorSpec extends ObjectBehavior
     {
         $this->shouldHaveType('Packedge\Workbench\Generators\PackageGenerator');
     }
+
+    /** @test */
+    public function it_does_creates_the_src_directory()
+    {
+        $this->getDirectories()->shouldReturn(['src']);
+    }
 }

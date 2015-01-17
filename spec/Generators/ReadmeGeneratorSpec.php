@@ -37,4 +37,10 @@ class ReadmeGeneratorSpec extends ObjectBehavior
         $this->setData(['some' => 'value']);
         $this->create('file-path');
     }
+
+    /** @test */
+    public function it_does_not_create_directories()
+    {
+        $this->getDirectories()->shouldReturn([]);
+    }
 }

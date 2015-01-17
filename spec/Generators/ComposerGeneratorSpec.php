@@ -13,4 +13,10 @@ class ComposerGeneratorSpec extends ObjectBehavior
         $this->shouldHaveType('Packedge\Workbench\Generators\GeneratorInterface');
         $this->shouldHaveType('Packedge\Workbench\Generators\ComposerGenerator');
     }
+
+    /** @test */
+    public function it_does_not_create_directories()
+    {
+        $this->getDirectories()->shouldReturn([]);
+    }
 }
