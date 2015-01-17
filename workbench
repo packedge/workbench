@@ -1,7 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__.'/vendor/autoload.php'))
+{
+    require __DIR__.'/vendor/autoload.php';
+}
+else
+{
+    require __DIR__.'/../../autoload.php';
+}
 
 // Stolen from https://github.com/laravel/homestead/blob/master/homestead
 function workbench_path()
