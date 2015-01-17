@@ -73,4 +73,12 @@ class PackageGenerator
     {
         $this->generators[] = $generators;
     }
+
+    /**
+     * @return array
+     */
+    public function getDirectories()
+    {
+        return $this->directories;
+    }
 }

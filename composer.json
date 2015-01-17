@@ -6,7 +6,8 @@
         "illuminate/filesystem": "~4.2",
         "mustache/mustache": "~2.7",
         "symfony/yaml": "~2.6",
-        "illuminate/container": "~4.2"
+        "illuminate/container": "~4.2",
+        "symfony/process": "~2.6"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.1",
