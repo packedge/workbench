@@ -9,7 +9,6 @@ use Packedge\Workbench\Package;
 use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class NewCommand extends BaseCommand
 {
@@ -29,18 +28,26 @@ class NewCommand extends BaseCommand
      * @var Parser
      */
     protected $parser;
-
     /**
      * @var string
      */
     protected $packageDescription;
+    /**
+     * @var string
+     */
     protected $packageName;
+    /**
+     * @var string
+     */
     protected $licenceName;
     /**
      * @var Package
      */
     private $package;
 
+    /**
+     * @param Package $package
+     */
     public function __construct(Package $package)
     {
         parent::__construct();
