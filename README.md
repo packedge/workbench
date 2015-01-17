@@ -5,4 +5,22 @@ A  Command line tool, for bootstrapping your PHP packages.
 [![Quality Score](https://img.shields.io/scrutinizer/g/packedge/workbench.svg?style=flat-square)](https://scrutinizer-ci.com/g/packedge/workbench)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/packedge/workbench.svg?style=flat-square)](https://scrutinizer-ci.com/g/packedge/workbench/code-structure)
 
-This package is still just a prototype, once I have a basic implementation working I will tag a beta release and add to packagist/composer, as well as updating docs.
+## This package is still just a prototype!
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+
+##Installation
+
+``` bash
+$ composer global require packedge/workbench
+```
+
+##Usage
+
+How to use this package...
+
+##License
+
+This package is released under the MIT license. Please see the [License File](LICENSE) for more information.
