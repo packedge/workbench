@@ -9,4 +9,9 @@ class BaseCommand extends Command
         if($value = $this->argument($name)) return $value;
         return $this->ask($question);
     }
+
+    public function chooseAnOption($question, array $data)
+    {
+        return $this->choice($question, $data);
+    }
 } 

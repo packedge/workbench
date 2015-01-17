@@ -7,7 +7,7 @@
     "require-dev": {
 
     },
-    "license": "MIT",
+    "license": "{{ licence }}",
     "authors": [
         {
             "name": "{{ author }}",

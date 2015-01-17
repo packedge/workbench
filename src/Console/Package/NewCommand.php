@@ -2,12 +2,14 @@
 
 use Packedge\Workbench\Console\BaseCommand;
 use Packedge\Workbench\Generators\ComposerGenerator;
+use Packedge\Workbench\Generators\LicenceGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
 use Packedge\Workbench\Generators\ReadmeGenerator;
 use Packedge\Workbench\Package;
 use Packedge\Workbench\Parsers\PackageParser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class NewCommand extends BaseCommand
 {
@@ -33,6 +35,7 @@ class NewCommand extends BaseCommand
      */
     protected $packageDescription;
     protected $packageName;
+    protected $licenceName;
     /**
      * @var Package
      */
@@ -53,6 +56,17 @@ class NewCommand extends BaseCommand
     {
         $this->packageName = $this->askForArgument('package', 'What is your package name?');
         $this->packageDescription = $this->askForArgument('description', 'What is your package description?');
+        $this->licenceName = $this->chooseAnOption('Choose a licence', LicenceGenerator::showList());
+
+//        $helper = $this->getHelper('question');
+//        $q = new ChoiceQuestion('choose a licence', [
+//            'a', 'b', 'c'
+//        ]);
+//
+//        $color = $helper->ask($this->input, $this->output, $q);
+//        $this->output->writeln('You have just selected: ' . $color);
+//
+//        die();
 
         $this->package->setPackageName($this->packageName);
         $this->parser = new PackageParser($this->packageName);
@@ -61,6 +75,10 @@ class NewCommand extends BaseCommand
         // Composer
         $composer = $this->prepareComposer();
         $generator->addGenerator($composer);
+
+        // Licence
+        $licence = $this->prepareLicence();
+        $generator->addGenerator($licence);
 
         // Readme
         $readme = $this->prepareReadme();
@@ -108,6 +126,7 @@ class NewCommand extends BaseCommand
             'psr4' => $this->parser->toPsr4(), // allow overriding this.
             'author' => $this->option('name'), // this will be a default setting and overridden by this flag.
             'email' => $this->option('email'), // this will be a default setting and overridden by this flag.
+            'licence' => $this->licenceName
         ]);
         return $composer;
     }
@@ -121,8 +140,23 @@ class NewCommand extends BaseCommand
         $readme->setData([
             'name' => $this->parser->toHuman(),
             'description' => $this->packageDescription,
-            'package' => $this->parser->toPackageName()
+            'package' => $this->parser->toPackageName(),
+            'licence' => LicenceGenerator::getLicenceName($this->licenceName)
         ]);
         return $readme;
+    }
+
+    /**
+     * @return LicenceGenerator
+     */
+    protected function prepareLicence()
+    {
+        $licence = new LicenceGenerator;
+        $licence->setType($this->licenceName);
+        $licence->setData([
+            'name' => $this->option('name'), // this will be a default setting and overridden by this flag.
+            'year' => date('Y'),
+        ]);
+        return $licence;
     }
 }
