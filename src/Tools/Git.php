@@ -1,23 +1,32 @@
 <?php namespace Packedge\Workbench\Tools;
 
+use Symfony\Component\Process\ExecutableFinder;
+
 class Git
 {
     /**
      * @var string
      */
     protected $repositoryPath;
+    /**
+     * @var ExecutableFinder
+     */
+    private $executableFinder;
 
     /**
      * @param string $repositoryPath
+     * @param ExecutableFinder $executableFinder
      */
-    public function __construct($repositoryPath)
+    public function __construct($repositoryPath, ExecutableFinder $executableFinder)
     {
         $this->repositoryPath = realpath($repositoryPath);
+        $this->executableFinder = $executableFinder ?: new ExecutableFinder;
     }
 
     public function hasGit()
     {
-        // TODO: logic
+        $result = $this->executableFinder->find('git');
+        var_dump($result);
     }
 
     public function init()
