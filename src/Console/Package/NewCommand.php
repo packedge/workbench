@@ -54,20 +54,12 @@ class NewCommand extends BaseCommand
      */
     public function fire()
     {
+        // Data
         $this->packageName = $this->askForArgument('package', 'What is your package name?');
         $this->packageDescription = $this->askForArgument('description', 'What is your package description?');
         $this->licenceName = $this->chooseAnOption('Choose a licence', LicenceGenerator::showList());
 
-//        $helper = $this->getHelper('question');
-//        $q = new ChoiceQuestion('choose a licence', [
-//            'a', 'b', 'c'
-//        ]);
-//
-//        $color = $helper->ask($this->input, $this->output, $q);
-//        $this->output->writeln('You have just selected: ' . $color);
-//
-//        die();
-
+        // Base
         $this->package->setPackageName($this->packageName);
         $this->parser = new PackageParser($this->packageName);
         $generator = new PackageGenerator();
