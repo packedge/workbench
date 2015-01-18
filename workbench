@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Console\Application;
+
 if (file_exists(__DIR__.'/vendor/autoload.php'))
 {
     require __DIR__.'/vendor/autoload.php';
@@ -23,12 +25,8 @@ function workbench_path()
     }
 }
 
-//$app = new \Illuminate\Console\Application('Packedge Workbench', '0.1.0');
-//
-//$app->add(new \Packedge\Workbench\Console\Package\NewCommand);
+$app = new Application('Packedge Workbench', '0.2.0');
+$app->add(new \Packedge\Workbench\Console\Package\NewCommand);
 
-$app = new \Packedge\Workbench\Console\Application('Packedge Workbench', '0.1.0');
-
-$app->resolve('\Packedge\Workbench\Console\Package\NewCommand');
 
 $app->run();

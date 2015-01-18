@@ -48,10 +48,10 @@ class NewCommand extends BaseCommand
     /**
      * @param Package $package
      */
-    public function __construct(Package $package)
+    public function __construct(Package $package = null)
     {
         parent::__construct();
-        $this->package = $package;
+        $this->package = $package ?: new Package;
     }
 
     /**
