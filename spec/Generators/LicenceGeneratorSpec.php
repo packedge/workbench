@@ -61,7 +61,7 @@ class LicenceGeneratorSpec extends ObjectBehavior
 
         $this->filesystem->get($generatorPath . 'MIT.txt')->willReturn('template-data');
         $this->mustache->render('template-data', ['some' => 'value'])->willReturn('generated-output');
-        $this->filesystem->put('file-path/LICENCE', 'generated-output')->shouldBeCalled();
+        $this->filesystem->put('file-path/LICENSE', 'generated-output')->shouldBeCalled();
 
         $this->setType('MIT');
         $this->setData(['some' => 'value']);

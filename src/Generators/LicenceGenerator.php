@@ -29,7 +29,7 @@ class LicenceGenerator extends BaseGenerator implements GeneratorInterface
     public function __construct(Filesystem $filesystem = null, Mustache_Engine $mustache = null)
     {
         parent::__construct($filesystem, $mustache);
-        $this->outputPath = 'LICENCE';
+        $this->outputPath = 'LICENSE';
     }
 
     public static function showList()
