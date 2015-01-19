@@ -68,31 +68,34 @@ class NewCommand extends BaseCommand
      */
     public function fire()
     {
-        $this->manager->fire('package.new', []);
         // Data
         $this->packageName = $this->askForArgument('package', 'What is your package name?');
         $this->packageDescription = $this->askForArgument('description', 'What is your package description?');
         $this->licenceName = $this->chooseAnOption('Choose a licence', LicenceGenerator::showList());
 
-        // Base
         $this->package->setPackageName($this->packageName);
-        $this->parser = new PackageParser($this->packageName);
-        $generator = new PackageGenerator();
+
+        $this->manager->fire('package.new', $this->package);
+
+        // Base
+//        $this->package->setPackageName($this->packageName);
+//        $this->parser = new PackageParser($this->packageName);
+//        $generator = new PackageGenerator();
 
         // Composer
-        $composer = $this->prepareComposer();
-        $generator->addGenerator($composer);
+//        $composer = $this->prepareComposer();
+//        $generator->addGenerator($composer);
 
         // Licence
-        $licence = $this->prepareLicence();
-        $generator->addGenerator($licence);
+//        $licence = $this->prepareLicence();
+//        $generator->addGenerator($licence);
 
         // Readme
-        $readme = $this->prepareReadme();
-        $generator->addGenerator($readme);
+//        $readme = $this->prepareReadme();
+//        $generator->addGenerator($readme);
 
         // Create the Package
-        $generator->create($this->package);
+//        $generator->create($this->package);
     }
 
     /**
