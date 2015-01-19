@@ -1,6 +1,7 @@
 <?php namespace Packedge\Workbench\Console\Package;
 
 use Packedge\Workbench\Console\BaseCommand;
+use Packedge\Workbench\Foundation\EventManager;
 use Packedge\Workbench\Generators\ComposerGenerator;
 use Packedge\Workbench\Generators\LicenceGenerator;
 use Packedge\Workbench\Generators\PackageGenerator;
@@ -44,14 +45,20 @@ class NewCommand extends BaseCommand
      * @var Package
      */
     private $package;
+    /**
+     * @var EventManager
+     */
+    private $manager;
 
     /**
+     * @param EventManager $manager
      * @param Package $package
      */
-    public function __construct(Package $package = null)
+    public function __construct(EventManager $manager, Package $package = null)
     {
         parent::__construct();
         $this->package = $package ?: new Package;
+        $this->manager = $manager;
     }
 
     /**
@@ -61,6 +68,7 @@ class NewCommand extends BaseCommand
      */
     public function fire()
     {
+        $this->manager->fire('package.new', []);
         // Data
         $this->packageName = $this->askForArgument('package', 'What is your package name?');
         $this->packageDescription = $this->askForArgument('description', 'What is your package description?');

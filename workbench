@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use Packedge\Workbench\Foundation\EventManager;
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__.'/vendor/autoload.php'))
@@ -25,8 +26,9 @@ function workbench_path()
     }
 }
 
+$manager = new EventManager;
+$manager->listen('package.new', new \Packedge\Workbench\Listeners\NewPackageListener);
+
 $app = new Application('Packedge Workbench', '0.2.0');
-$app->add(new \Packedge\Workbench\Console\Package\NewCommand);
-
-
+$app->add(new \Packedge\Workbench\Console\Package\NewCommand($manager));
 $app->run();
