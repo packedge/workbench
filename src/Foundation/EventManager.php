@@ -4,10 +4,10 @@ class EventManager
 {
     protected $events = [];
 
-    public function listen($name, $obj)
+    public function listen($name, $className)
     {
-        if(!is_object($obj)) throw new InvalidArgumentException;
-        $this->events[$name][] = $obj;
+        if(!is_string($className)) throw new InvalidArgumentException;
+        $this->events[$name][] = new $className($this);
     }
 
     public function fire($name, $data)
