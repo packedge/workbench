@@ -1,3 +1,5 @@
+## Unmaintained: This package is no longer under active development
+
 # Workbench
 A  Command line tool, for bootstrapping your PHP packages.
 
